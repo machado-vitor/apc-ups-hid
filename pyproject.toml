@@ -1,0 +1,27 @@
+[build-system]
+requires = ["setuptools>=61"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "apc-ups-hid"
+version = "0.1.0"
+description = "USB HID driver and monitoring daemon for APC Back-UPS units, with MQTT/Home Assistant, HTTP JSON, CSV logging and NUT-compatible network export."
+readme = "README.md"
+license = { text = "MIT" }
+authors = [{ name = "Vitor Machado" }]
+requires-python = ">=3.9"
+dependencies = ["hidapi"]
+keywords = ["apc", "ups", "hid", "usb", "nut", "mqtt", "home-assistant", "back-ups"]
+
+[project.optional-dependencies]
+mqtt = ["paho-mqtt>=2.0"]
+
+[project.urls]
+Homepage = "https://github.com/machado-vitor/apc-ups-hid"
+
+[project.scripts]
+upsd = "upsd:main"
+upsctl = "upsctl:main"
+
+[tool.setuptools]
+py-modules = ["apcups", "upsd", "upsctl", "parse_rd", "probe"]
