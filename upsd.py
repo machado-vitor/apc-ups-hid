@@ -459,7 +459,10 @@ class Supervisor:
         except Exception as exc:
             self.last_error = str(exc)
             with self.lock:
-                self.state = {"ok": False, "ts": time.time(), "error": self.last_error}
+                # Keep the last good readings so the retained MQTT state never
+                # loses its keys: HA's value_json templates warn on every
+                # missing field otherwise (one burst per transient USB error).
+                self.state = {**self.state, "ok": False, "ts": time.time(), "error": self.last_error}
             return False
         data["ok"] = True
         data["iso"] = time.strftime("%Y-%m-%dT%H:%M:%S%z")
